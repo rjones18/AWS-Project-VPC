@@ -3,15 +3,13 @@ version: 2.1
 jobs:
   terraform-deploy:
     docker:
-      - image: hashicorp/terraform:latest  # Use Terraform's official image
+      - image: hashicorp/terraform:latest  
+
+    environment:
+      AWS_REGION: "us-east-1"  # Ensure the region is set
 
     steps:
-      - checkout  # Checkout the code repository
-
-      - run:
-          name: "Install Dependencies"
-          command: |
-            apk add --no-cache curl jq git  # Install necessary packages
+      - checkout  
 
       - run:
           name: "Terraform Init"
@@ -29,3 +27,4 @@ workflows:
   terraform-workflow:
     jobs:
       - terraform-deploy
+
