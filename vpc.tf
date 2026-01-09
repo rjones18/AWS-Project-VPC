@@ -1,18 +1,22 @@
 module "vpc" {
-  source = "terraform-aws-modules/vpc/aws"
+  source = "git::https://github.com/rjones18/AWS-VPC-MODULE.git?ref=v1.0.0"
 
-  name = "reg-project-vpc"
-  cidr = "10.0.0.0/16"
+  # VPC settings
+  vpc_name    = "project-vpc"
+  vpc_cidr    = "10.0.0.0/16"
 
-  azs             = ["us-east-1a", "us-east-1b"]
-  private_subnets = ["10.0.1.0/24", "10.0.2.0/24"]
-  public_subnets  = ["10.0.101.0/24", "10.0.102.0/24"]
+  # Subnets
+  public_subnet_cidrs  = ["10.0.1.0/24", "10.0.2.0/24"]
+  private_subnet_cidrs = ["10.0.11.0/24", "10.0.12.0/24"]
+  availability_zones   = ["us-west-2a", "us-west-2b"]
 
-  enable_nat_gateway = true
-  enable_vpn_gateway = false
+  # Gateways
+  enable_nat_gateway     = true
+  single_nat_gateway     = true
+  enable_internet_gateway = true
 
   tags = {
-    Terraform = "true"
     Environment = "dev"
+    Project     = "my-project"
   }
 }
